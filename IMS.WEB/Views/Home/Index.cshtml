@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+        <div id="sales-chart-container">
+            <canvas id="myChart"></canvas>  
+        </div> 
+        <div id="pie-chart-container">
+             <div id="container"></div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="~/Scripts/IMS/Dashboard/dashboard.js"></script>
+<script>
+const salesOrderUrl = '/SalesOrder/GetMonthlyTotalSales';
+const purchaseOrderUrl = '/PurchaseOrder/GetMonthlyTotalPurchases';
+const productUrl = '/Product/GetAllProductsQuantity';
+
+$("#sales-chart-container").css("height", "350px");
+$("#sales-chart-container").css("width", "100%");
+
+const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+];
+const monthBasedSales = [
+    {month:1, sales:0},
+    {month:2, sales:0},
+    {month:3, sales:0},
+    {month:4, sales:0},
+    {month:5, sales:0},
+    {month:6, sales:0},
+    {month:7, sales:0},
+    {month:8, sales:0},
+    {month:9, sales:0},
+    {month:10, sales:0},
+    {month:11, sales:0},
+    {month:12, sales:0},
+];
+const data = {
+  labels: months,
+  datasets: [{
+    barPercentage: 0.5,
+    barThickness: 6,
+    maxBarThickness: 8,
+    minBarLength: 2,
+    label: 'My Sales',
+    data: [0,0,0,0,0,0,0,0,0,0,0,0],
+    backgroundColor : [
+     'rgba(255, 99, 132, 0.2)',
+     'rgba(255, 159, 64, 0.2)',
+     'rgba(255, 205, 86, 0.2)',
+     'rgba(75, 192, 192, 0.2)',
+     'rgba(54, 162, 235, 0.2)',
+     'rgba(153, 102, 255, 0.2)',
+     'rgba(201, 203, 207, 0.2)',
+     'rgba(255, 99, 132, 0.2)',
+     'rgba(255, 159, 64, 0.2)',
+     'rgba(255, 205, 86, 0.2)',
+     'rgba(75, 192, 192, 0.2)',
+     'rgba(54, 162, 235, 0.2)'
+   ],   
+    borderColor : [
+     'rgb(255, 99, 132)',
+     'rgb(255, 159, 64)',
+     'rgb(255, 205, 86)',
+     'rgb(75, 192, 192)',
+     'rgb(54, 162, 235)',
+     'rgb(153, 102, 255)',
+     'rgb(201, 203, 207)',
+     'rgb(255, 99, 132)',
+     'rgb(255, 159, 64)',
+     'rgb(255, 205, 86)',
+     'rgb(75, 192, 192)',
+     'rgb(54, 162, 235)'
+   ],
+   
+   // Use the colors and borderColors arrays in your Chart.js configuration
+
+    borderWidth: 1
+  }]
+};
+const config = {
+  type: 'bar',
+  data: data,
+  options: {
+    maintainAspectRatio: false, // Allow chart to resize without maintaining aspect ratio
+    responsive: true, // Allow chart to be responsive to container size
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  },
+};
+
+
+var chartElement = $('#myChart');
+
+var myChart = new Chart(
+    chartElement,
+    config
+  );
+
+
+   $.ajax({
+     url: salesOrderUrl,
+     dataType: 'json',
+     method:"POST",
+     success: function(data) {
+         // Update the chart data with retrieved values
+         monthBasedSales.forEach(item => {
+             data.forEach(ms =>{
+                if(ms.Item1 == item.month){
+                     item.sales = ms.Item2;
+                 }
+             })
+           });
+         console.log(monthBasedSales)
+         console.log(myChart);
+         myChart.config.data.datasets[0].data= monthBasedSales.map(x=>x.sales);
+         myChart.update();
+         console.log(data);
+         },
+         error: function(error) {
+             console.error('Error fetching data:', error);
+         }
+      });
+</script>

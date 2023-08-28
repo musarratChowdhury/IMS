@@ -1,0 +1,81 @@
+﻿
+@{
+    Layout = null;
+}
+@using IMS.WEB.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>@ViewData["Title"] - Inventory</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!--AdminLTE-->
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="~/Content/Lte/adminlte/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/Lte/adminlte/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/Lte/adminlte/components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/Lte/adminlte/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/Content/Lte/adminlte/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+
+
+</head>
+<body class="hold-transition skin-yellow fixed sidebar-mini">
+    <div class="wrapper">
+        <div class="login-box">
+
+            <div class="login-box-body">
+                <div class="login-logo">
+                    <a href="/"><b>Inven</b>Tory</a>
+                </div>
+                <p class="login-box-msg">Login</p>
+                <form id="loginForm" asp-controller="Account" asp-action="Login" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label asp-for="Email">Email</label>
+                        <input asp-for="Email" id="email" name="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password">Password</label>
+                        <input asp-for="Password" id="password" type="password" name="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <input asp-for="RememberMe" id="rememberMe" class="form-check-input" type="checkbox" />
+                        <label class="form-check-label" asp-for="RememberMe">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" id="registerBtn" class="btn btn-primary">Register</button>
+                </form>
+
+
+            </div>
+            <!-- /.form-box -->
+        </div>
+
+    </div>
+
+
+</body>
+    <script src="~/Content/Lte/adminlte/components/jquery/dist/jquery.min.js"></script>
+    @Html.Partial("_ValidationScriptsPartial")
+    <script src="~/Scripts/IMS/Register/login.js"></script>
+
+</html>
+
+
+
+
+
+

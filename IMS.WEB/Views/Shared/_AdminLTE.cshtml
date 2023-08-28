@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+@*@using Microsoft.AspNet.Identity
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        var userId = User.Identity.GetUserId();
+        var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+        var appUser = userManager.FindById(userId);
+
+        // Now you have the appUser and can use it in your view.
+    }
+    else
+    {
+        // The user is not authenticated, handle it accordingly.
+    }
+}*@
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>@ViewData["Title"] - Inventory</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!--AdminLTE-->
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="~/Content/Lte/adminlte/components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Content/Lte/adminlte/components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="~/Content/Lte/adminlte/components/Ionicons/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Content/Lte/adminlte/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="~/Content/Lte/adminlte/dist/css/skins/_all-skins.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!--Snycfusion-->
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-base/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-grids/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-base/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-grids/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-buttons/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-popups/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-richtexteditor/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-navigations/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-dropdowns/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-lists/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-inputs/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-calendars/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-notifications/styles/material.css"
+          rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/22.2.5/ej2-splitbuttons/styles/material.css"
+          rel="stylesheet" />
+    
+     <style>
+            .e-row[aria-selected="true"] .e-customizedExpandcell {
+                background-color: #e0e0e0;
+            }
+    
+            .e-grid.e-gridhover tr[role='row']:hover {
+                background-color: #eee;
+            }
+            
+            .e-grid td.e-selectionbackground {
+                background-color: #2F70A8;
+                color: white !important;
+            }
+    
+            .e-expand::before {
+                content: '\e5b8';
+            }
+            .Active{
+                background-color: #58d258;
+                border-radius: .5rem;
+                padding: 0.5rem;
+            }
+            .Inactive{
+                background-color: #ff5e5e;
+                border-radius: .5rem;
+                padding: 0.5rem;
+            }
+            .content-wrapper{
+                height: 94vh;
+            }
+             .hidden{
+                  display:none
+              }
+            .notification {
+              position: absolute;
+              z-index: 2;
+              width: 40%;
+              top: 3.5%;
+              right: 0;
+            }
+        </style>
+
+    @RenderSection("Styles", required: false)
+
+</head>
+<body class="hold-transition skin-yellow fixed sidebar-mini">
+    <div class="wrapper">
+        @Html.Partial("_AdminlteMainHeader", null)
+        <!-- Left side column. contains the logo and sidebar -->
+        @Html.Partial("_AdminlteMainSidebar", null
+       )
+        <!-- Content Wrapper. Contains page content -->
+        @RenderBody()
+        <!-- /.content-wrapper -->
+        @Html.Partial("_AdminlteFooter")
+    </div>
+    <!-- ./wrapper -->
+    <!--AdminLTE-->
+    <!-- jQuery 3 -->
+    <script src="~/Content/Lte/adminlte/components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/Content/Lte/adminlte/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="~/Content/Lte/adminlte/components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Content/Lte/adminlte/components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Content/Lte/adminlte/dist/js/adminlte.min.js"></script>
+    <script src="https://cdn.syncfusion.com/ej2/syncfusion-helper.js" type="text/javascript"></script>
+    @*<script id="template" type="text/x-template">
+        <div class="e-pagertemplate">
+            <div class="col-lg-12 control-section">
+                <div class="content-wrapper">
+                    <input id="currentPage" type="text" value=${currentPage}>
+                </div>
+            </div>
+
+            <div id="totalPages" class="e-pagertemplatemessage" style="margin-top:5px;margin-left:30px;border: none; display: inline-block ">
+                <span class="e-pagenomsg">${currentPage} of ${totalPages} pages (${totalRecordsCount} items)</span>
+            </div>
+        </div>
+    </script>*@
+
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>
